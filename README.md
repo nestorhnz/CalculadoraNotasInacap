@@ -1,6 +1,8 @@
 # CalculadoraNotasInacap
 Proyecto de investigación, Funciones y matricez, 2do semestre INACAP
 
+Chicos sientanse libres de crear una nueva branch, agregar funciones, hacer commit, merge, resolver y subir issues/propuestas y demás 
+
 Para hacer la prueba en el documento "funciones" y usar la funcion "buscar_coincidencia" deben agregar la ruta de dos imagenes de referencia, una con las notas y otra con las ponderaciones, luego agregar la captura completa
 Estas capturas las hacen desde su pc en la pagina de inacap donde aparecen sus calificaciones, y usan la ruta donde se guardo.
 
