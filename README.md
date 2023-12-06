@@ -6,7 +6,7 @@ Chicos sientanse libres de crear una nueva branch, agregar funciones, hacer comm
 Para hacer la prueba en el documento "funciones" y usar la funcion "buscar_coincidencia" deben agregar la ruta de dos imagenes de referencia, una con las notas y otra con las ponderaciones, luego agregar la captura completa
 Estas capturas las hacen desde su pc en la pagina de inacap donde aparecen sus calificaciones, y usan la ruta donde se guardo.
 
-A veces cv2 tiene problemas al abrir rutas cambien los "\" por "/" o usen r string
+A veces cv2 tiene problemas al abrir rutas cambien los "\\" por "/" o usen r string
 Ejemplo de ruta: C:\Imagenes\Nota.png
 
 Como escribirla
