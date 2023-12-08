@@ -207,9 +207,9 @@ def buscar_coincidencia(imagen_completa: str, imagen_a_buscar: str):  # Busca un
     return  coincidencia
 
 
-# Ejemplo de como funciona:
+# # Ejemplo de como funciona:
 
-# pantalla_completa = 'C:/Imagenes/Captura de pantalla (88).png'                        # Ruta de captura de pantalla completa
+# pantalla_completa = 'C:/Imagenes/BD3.png'                                             # Ruta de captura de pantalla completa
 # imagen_ponderaciones = 'C:/Imagenes/Ponderacion titulo.png'                           # Imagen de referencia 1
 # imagen_calificaciones = 'C:/Imagenes/Nota.png'                                        # Imagen de referencia 2
 
@@ -228,9 +228,12 @@ def buscar_coincidencia(imagen_completa: str, imagen_a_buscar: str):  # Busca un
 #             print(f'La evaluacion #{i+1} tiene una ponderacion del {ponderaciones[i]}% y el alumno saco un: {calificaciones[i]}')
 #         else:
 #             print(f'La evaluacion #{i+1} tiene una ponderacion del {ponderaciones[i]}% y el alumno todavia no ha presentado la evaluacion')
+# print('')                             
 
-
-
+# nota_necesaria = 5
+# notas_aprobatorias = calcular_calificaciones(ponderaciones, calificaciones, nota_necesaria)   
+# for llave, valor in notas_aprobatorias.items():
+#     print(f'Para probar con {nota_necesaria} necesitas aprobar la {llave} con un {valor}')
 
 
 # Chequear el documento READ ME
