@@ -70,7 +70,6 @@ def ordenar_diccionario(diccionario: dict, llave=True):   # Ordena diccionario d
     return diccionario_ordenado
 
 def calcular_calificaciones(porcentajes, calificaciones, calificacion_aprobatoria):    # Calcula las notas necesarias para aprobar
-
     # DECLARANDO VARIABLES LISTAS Y DICCIONARIOS
     numero_calificaciones_restantes = len(porcentajes) - len(calificaciones)
     porcentaje_aprobacion = (calificacion_aprobatoria * 100) / 7 # EJ: 5.6 = 80 Ese es el porcentaje total necesario para aprobar
@@ -92,7 +91,6 @@ def calcular_calificaciones(porcentajes, calificaciones, calificacion_aprobatori
     # Convierte las calificaciones del alumno en la calificacion final independientemente si faltan o no evaluaciones
     diferencia = calificacion_aprobatoria - (sum(notas_porcentaje) * 7 / 100)
 
-    
     if diferencia >= 0: # Las notas del estudiante todavia no son suficientes para haber aprobado la asignatura
        
         suma_porcentajes_restantes = sum(porcentajes_faltantes.values()) 
@@ -206,8 +204,19 @@ def buscar_coincidencia(imagen_completa: str, imagen_a_buscar: str):  # Busca un
 
     return  coincidencia
 
+# MANEJO DE ERRORES
 
-# # Ejemplo de como funciona:
+class PonderacionMenorA100(Exception): # Maneja error de ponderaciones menores a 100
+    pass
+
+class EntryVacio(Exception): # Maneja error de caja de texto vacia
+    pass
+
+class MalaCalificacion(Exception): # Maneja error calificacion muy alta o muy baja
+    pass
+
+
+# # EJEMPLO DE COMO FUNCIONA:
 
 # pantalla_completa = 'C:/Imagenes/BD3.png'                                             # Ruta de captura de pantalla completa
 # imagen_ponderaciones = 'C:/Imagenes/Ponderacion titulo.png'                           # Imagen de referencia 1
@@ -233,7 +242,7 @@ def buscar_coincidencia(imagen_completa: str, imagen_a_buscar: str):  # Busca un
 # nota_necesaria = 5
 # notas_aprobatorias = calcular_calificaciones(ponderaciones, calificaciones, nota_necesaria)   
 # for llave, valor in notas_aprobatorias.items():
-#     print(f'Para probar con {nota_necesaria} necesitas aprobar la {llave} con un {valor}')
+#     print(f'Para aprobar con {nota_necesaria} necesitas aprobar la {llave} con un {valor}')
 
 
 # Chequear el documento READ ME
