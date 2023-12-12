@@ -121,7 +121,7 @@ def calcular_calificaciones(porcentajes, calificaciones, calificacion_aprobatori
                     porcentaje_mas_exceso = porcentaje_individual + exceso
 
                     if porcentaje_mas_exceso < porcentaje:
-                        calificacion_aprobatoria = (porcentaje_mas_exceso * 7) / porcentaje
+                        calificacion_aprobatoria = round((porcentaje_mas_exceso * 7) / porcentaje, 1)
                         notas_necesarias[f'Evaluacion {numero_evaluacion}'] = calificacion_aprobatoria
                         exceso = 0
                     else:
