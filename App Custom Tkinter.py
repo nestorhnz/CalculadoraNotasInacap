@@ -141,7 +141,7 @@ def nota_final_actual(ponderaciones: list, calificaciones: list):   # Calcula la
         conversion = (nota * ponderaciones[indice]) / 7   # Convierte las calificaciones en ponderaciones finales usando regla de 3
         notas_porcentaje.append(conversion)
     # Convierte las calificaciones del alumno en la calificacion final independientemente si faltan o no evaluaciones
-    final = (sum(notas_porcentaje) * 7 / 100)
+    final = round((sum(notas_porcentaje) * 7 / 100),1)
     return final
         
 def cambiar_modo(): # Cambia de modo obscuro a claro y viceversa
@@ -292,12 +292,17 @@ def llamar_funciones():     # Llama las funciones chequear_ruta, borrar y escrib
         vista.set('Calcular calificaciones')
 
     except Exception as e:
-        print(f'Ha ocurrido un error, nombre {e}')
+        lbl_alerta.configure(text=f'Ha ocurrido un error {e}')
 
 def borrar_caja_texto():    # Borra todo el texto escrito en las cajas de notas y ponderaciones
     lista_cajas_texto = [nota_1, nota_2, nota_3, nota_4, ponderacion_1, ponderacion_2, ponderacion_3, ponderacion_4, nota_aprobatoria]
     for caja in lista_cajas_texto:
         caja.delete(0, 'end')  # Borrar todo el contenido de la caja de texto
+    
+    lbl_alerta.configure(text='')
+    lbl_nota_total.configure(text='')
+    lbl_notas_necesarias.configure(text='')
+    lbl_evaluaciones.configure(text='')
     return
     
 def escribir_entry(lista, numero):   # Escribe texto en entry
