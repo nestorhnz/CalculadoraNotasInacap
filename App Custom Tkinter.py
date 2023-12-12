@@ -287,6 +287,8 @@ def llamar_funciones():     # Llama las funciones chequear_ruta, borrar y escrib
         escribir_entry(calificaciones, 2) # Escribe las calificaciones en las cajas de calificaciones
         escribir_entry(ponderaciones, 1)  # Escribe las ponderaciones en las cajas de ponderaciones
 
+        lbl_alerta_2.configure(text='')
+
         vista.set('Calcular calificaciones')
 
     except Exception as e:
@@ -401,9 +403,11 @@ nota_aprobatoria.grid(row=1, column=3, padx=10, pady=10, sticky='w')
 
 # Botones
 btn_calcular = ctk.CTkButton(vista.tab('Calcular calificaciones'), command=calcular_calificaciones_manualmente, text='Calcular calificaciones')
+btn_limpiar = ctk.CTkButton(vista.tab('Calcular calificaciones'), command=borrar_caja_texto, text='Limpiar', width=64)
 
 # Ubicar boton
 btn_calcular.grid(row=1, column=4, sticky='w')
+btn_limpiar.grid(row=1, column=5, sticky='w', padx=10)
 
 # switch modo
 switch_var = ctk.StringVar(value="off")
@@ -440,7 +444,7 @@ imagen_1 = PhotoImage(file='subir(4).png')
 btn_cargar_img_1 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(1), image= imagen_1, fg_color="transparent", width=64, height=64)
 btn_cargar_img_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(2), image= imagen_1, fg_color="transparent", width=64, height=64)
 btn_cargar_img_3 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(3), image= imagen_1, fg_color="transparent", width=64, height=64)
-btn_calcular_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Calcular', command=llamar_funciones)
+btn_calcular_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Calcular', command=llamar_funciones, width=64)
 
 # Ubicando botones
 btn_cargar_img_1.grid(row=0, column=0, padx=15, pady=50)
