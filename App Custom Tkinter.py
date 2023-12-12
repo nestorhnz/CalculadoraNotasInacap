@@ -5,6 +5,8 @@ from tkinter import filedialog
 from PIL import ImageTk
 import os
 import shutil
+from CTkToolTip import *
+from tkinter import PhotoImage
 
 # VARIABLES
 ponderaciones_globales = []
@@ -153,30 +155,42 @@ def cambiar_modo(): # Cambia de modo obscuro a claro y viceversa
 
 def cargar_img(numero): # Ingresa la ruta de la imagen cargada a las variables ruta_notas, ruta_ponderaciones y ruta_pantalla
     global ruta_notas, ruta_ponderaciones, ruta_pantalla
+    extensiones_imagen = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
+    contador = 0
     if numero == 1:
         try:
             ruta_notas = filedialog.askopenfilename()
-            lbl_calificaciones_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='Tus notas', justify='center', anchor='n')
-            lbl_calificaciones_1.grid(row=2, column=0, sticky='w', padx=20)
-            preview_imagen(ruta_notas, 0)
+
+            for ext in extensiones_imagen:
+                if ruta_notas.lower().endswith(ext):
+                    contador += 1
+            if contador == 1:
+                imagen_comprobar(0)
+                contador = 0
         except Exception as e:
             lbl_alerta_2.configure(text=f'Ha ocurrido un error, intenta nuevamente')
         return 
     elif numero == 2:
         try:
             ruta_ponderaciones = filedialog.askopenfilename()
-            lbl_ponde_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='Tus ponderaciones', justify='center', anchor='n')
-            lbl_ponde_1.grid(row=2, column=1, sticky='w', padx=20)
-            preview_imagen(ruta_ponderaciones, 1)
+            for ext in extensiones_imagen:
+                if ruta_ponderaciones.lower().endswith(ext):
+                    contador += 1
+            if contador == 1:
+                imagen_comprobar(1)
+                contador = 0    
         except Exception as e:
             lbl_alerta_2.configure(text=f'Ha ocurrido un error, intenta nuevamente')
         return
     elif numero == 3:
         try:
             ruta_pantalla = filedialog.askopenfilename()
-            lbl_captu_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='Tu captura', justify='center', anchor='n')
-            lbl_captu_1.grid(row=2, column=2, sticky='w', padx=20)
-            preview_imagen(ruta_pantalla, 2)
+            for ext in extensiones_imagen:
+                if ruta_pantalla.lower().endswith(ext):
+                    contador += 1
+            if contador == 1:
+                imagen_comprobar(2)
+                contador = 0
         except Exception as e:
             lbl_alerta_2.configure(text=f'Ha ocurrido un error, intenta nuevamente')
         return
@@ -220,37 +234,33 @@ def chequear_rutas(): # Chequea que haya imagenes cargadas en las variables ruta
         raise Exception('Error, no hay imagenes cargadas')
     return
 
-def preview_imagen(ruta, columna):   # Crea un preview de la imagen y la ubica en la vista "Subir imagenes"
+def imagen_comprobar(columna):   # Crea un preview de la imagen y la ubica en la vista "Subir imagenes"
+    imagen_comprobar = PhotoImage(file='comprobar.png')
     if columna == 0:
-        # Abrir y redimensionar ejemplos de imagenes
-        img1 = Image.open(ruta)
-        img1.thumbnail((100, 100))
-        img_tk1 = ImageTk.PhotoImage(img1)
-
+        #Ubicando etiqueta
+        lbl_calificaciones_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='¡Imagen lista!', justify='center', anchor='n')
+        lbl_calificaciones_1.grid(row=1, column=0, sticky='n')
+        
         # Ubicando ejemplos de imagenes
-        lbl_img1 = tk.Label(master=vista.tab('Subir imagenes'), image=img_tk1)
-        lbl_img1.image = img_tk1  # Mantener referencia para evitar que la imagen sea eliminada por el recolector de basura
-        lbl_img1.grid(row=2, column=columna, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=50)
+        btn_falso_1 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', image= imagen_comprobar, fg_color="transparent", hover=False)
+        btn_falso_1.grid(row=1, column=columna, sticky='n', pady = 20)
+
     if columna == 1:
-        # Abrir y redimensionar ejemplos de imagenes
-        img2 = Image.open(ruta)
-        img2.thumbnail((100, 100))
-        img_tk2 = ImageTk.PhotoImage(img2)
-
+        #Ubicando etiqueta
+        lbl_ponde_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='¡Imagen lista!', justify='center', anchor='n')
+        lbl_ponde_1.grid(row=1, column=1, sticky='n')
+        
         # Ubicando ejemplos de imagenes
-        lbl_img2 = tk.Label(master=vista.tab('Subir imagenes'), image=img_tk2)
-        lbl_img2.image = img_tk2  # Mantener referencia para evitar que la imagen sea eliminada por el recolector de basura
-        lbl_img2.grid(row=2, column=columna, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=50)
+        btn_falso_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', image= imagen_comprobar, fg_color="transparent", hover=False)
+        btn_falso_2.grid(row=1, column=columna, sticky='n', pady = 20)
     if columna == 2:
-        # Abrir y redimensionar ejemplos de imagenes
-        img3 = Image.open(ruta)
-        img3.thumbnail((150, 150))
-        img_tk3 = ImageTk.PhotoImage(img3)
-
+        #Ubicando etiqueta
+        lbl_captu_1 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='¡Imagen lista!', justify='center', anchor='n')
+        lbl_captu_1.grid(row=1, column=2, sticky='n')
+        
         # Ubicando ejemplos de imagenes
-        lbl_img3 = tk.Label(master=vista.tab('Subir imagenes'), image=img_tk3)
-        lbl_img3.image = img_tk3  # Mantener referencia para evitar que la imagen sea eliminada por el recolector de basura
-        lbl_img3.grid(row=2, column=columna, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=50)
+        btn_falso_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', image= imagen_comprobar, fg_color="transparent", hover=False)
+        btn_falso_2.grid(row=1, column=columna, sticky='n', pady = 20)
 
 def llamar_funciones():     # Llama las funciones chequear_ruta, borrar y escribir entry, y cambia de vista
     global ruta_notas, ruta_ponderaciones, ruta_pantalla
@@ -311,6 +321,18 @@ def eliminar_archivo(ruta_archivo):
         lbl_alerta_2.configure(text=f'Ocurrio un error: {e}')
     return
 
+def mostrar_imagen(event, master_1, imagen, x: int, y: int):    # Muestra imagen en tooltip
+    global imagen_mostrada, etique1
+    imagen_mostrada = tk.PhotoImage(file=imagen)
+    etique1 = tk.Label(master=master_1)
+    etique1.place(x=x, y=y)
+    etique1.config(image=imagen_mostrada)
+    return
+
+def ocultar_imagen(event):  # Destruye imagen creada en tooltip
+    etique1.destroy()
+    return
+
 # Ventana principal
 ventana = ctk.CTk()
 ventana.geometry('600x500')
@@ -319,7 +341,7 @@ ventana.title('Nota +')
 # Creando vistas
 vista = ctk.CTkTabview(ventana)
 # Ubicando las vistas
-vista.pack(pady=20, padx=20)
+vista.pack(pady=20, padx=20, expand = 1)
 # Añadiendo vistas
 vista.add('Calcular calificaciones')
 vista.add('Subir imagenes')
@@ -399,63 +421,61 @@ lbl_aprobatoria = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='Pantall
 lbl_alerta_2 = ctk.CTkLabel(master=vista.tab('Subir imagenes'), text='', justify='center', anchor='n')
 
 # Ubicando etiquetas
-lbl_calificaciones.grid(row=0, column=0, sticky='w', padx=30)
-lbl_ponderaciones.grid(row=0, column=1, sticky='w', columnspan=3, padx=30)
-lbl_aprobatoria.grid(row=0, column=2, sticky='w', columnspan=3, padx=30)
-lbl_alerta_2.grid(row=5, column=0, sticky='w', columnspan=3, padx=30)
+lbl_calificaciones.grid(row=0, column=0, sticky='n', padx=30, pady=30, rowspan=3)
+lbl_ponderaciones.grid(row=0, column=1, sticky='n', padx=30, pady=30, rowspan=3)
+lbl_aprobatoria.grid(row=0, column=2, sticky='n', padx=30, pady=30, rowspan=3)
+lbl_alerta_2.grid(row=3, column=0, sticky='n', columnspan=3, padx=30, pady=20)
 
 # Modificando el tamaño de las filas y columnas
 vista.tab('Subir imagenes').columnconfigure(0, minsize=217)  # Columna 0
 vista.tab('Subir imagenes').columnconfigure(1, minsize=210)  # Columna 1
 vista.tab('Subir imagenes').columnconfigure(2, minsize=210)  # Columna 2
-vista.tab('Subir imagenes').rowconfigure(0, minsize=84)  # Columna 0
-vista.tab('Subir imagenes').rowconfigure(1, minsize=84)  # Columna 1
-vista.tab('Subir imagenes').rowconfigure(2, minsize=84)  # Columna 2
-vista.tab('Subir imagenes').rowconfigure(3, minsize=84)  # Columna 2
-vista.tab('Subir imagenes').rowconfigure(4, minsize=84)  # Columna 2
+vista.tab('Subir imagenes').rowconfigure(1, minsize=150)  # Columna 1
+vista.tab('Subir imagenes').rowconfigure(3, minsize=40)  # Columna 2
 
-# Cargando ejemplos de imagenes
-ruta_imagen1 = 'Nota2312.png'
-ruta_imagen2 = 'p2312.png'
-ruta_imagen3 = 'bd2312.png'
-
-# Abrir y redimensionar ejemplos de imagenes
-imagen1 = Image.open(ruta_imagen1)
-imagen1.thumbnail((100, 100))
-imagen_tk1 = ImageTk.PhotoImage(imagen1)
-
-imagen2 = Image.open(ruta_imagen2)
-imagen2.thumbnail((100, 100))
-imagen_tk2 = ImageTk.PhotoImage(imagen2)
-
-imagen3 = Image.open(ruta_imagen3)
-imagen3.thumbnail((150, 150))
-imagen_tk3 = ImageTk.PhotoImage(imagen3)
-
-# Ubicando ejemplos de imagenes
-label_imagen1 = tk.Label(master=vista.tab('Subir imagenes'), image=imagen_tk1)
-label_imagen1.image = imagen_tk1  # Mantener referencia para evitar que la imagen sea eliminada por el recolector de basura
-label_imagen1.grid(row=0, column=0, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=50)
-
-label_imagen2 = tk.Label(master=vista.tab('Subir imagenes'), image=imagen_tk2)
-label_imagen2.image = imagen_tk2
-label_imagen2.grid(row=0, column=1, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=30)
-
-label_imagen3 = tk.Label(master=vista.tab('Subir imagenes'), image=imagen_tk3)
-label_imagen3.image = imagen_tk3
-label_imagen3.grid(row=0, column=2, sticky='w', columnspan=3, padx=30, rowspan= 2, pady=30)
+# Imagenes para los botones
+imagen_1 = PhotoImage(file='subir(4).png')
 
 # Creando botones para cargar imagenes
-btn_cargar_img_1 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Cargar imagen', command=lambda: cargar_img(1))
-btn_cargar_img_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Cargar imagen', command=lambda: cargar_img(2))
-btn_cargar_img_3 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Cargar imagen', command=lambda: cargar_img(3))
+btn_cargar_img_1 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(1), image= imagen_1, fg_color="transparent", width=64, height=64)
+btn_cargar_img_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(2), image= imagen_1, fg_color="transparent", width=64, height=64)
+btn_cargar_img_3 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='', command=lambda: cargar_img(3), image= imagen_1, fg_color="transparent", width=64, height=64)
 btn_calcular_2 = ctk.CTkButton(master=vista.tab('Subir imagenes'), text='Calcular', command=llamar_funciones)
 
 # Ubicando botones
-btn_cargar_img_1.grid(row=1, column=0, sticky='w', columnspan=3, padx=15)
-btn_cargar_img_2.grid(row=1, column=1, sticky='w', columnspan=3, padx=15)
-btn_cargar_img_3.grid(row=1, column=2, sticky='w', columnspan=3, padx=15)
-btn_calcular_2.grid(row=4, column=1, sticky='w', columnspan=3)
+btn_cargar_img_1.grid(row=0, column=0, padx=15, pady=50)
+btn_cargar_img_2.grid(row=0, column=1, padx=15, pady=50)
+btn_cargar_img_3.grid(row=0, column=2, padx=15, pady=50)
+btn_calcular_2.grid(row=2, column=1, sticky='n')
+
+# Mensajes para los tooltips
+mensaje_1 ="Sube una captura pequeña de la tabla de tus calificaciones"
+mensaje_2 ="Sube una captura pequeña de la tabla de tus ponderaciones"
+mensaje_3 ="Sube una captura de pantalla completa"
+
+# Creando tooltips
+tooltip_1 = CTkToolTip(btn_cargar_img_1, delay=0, message=mensaje_1, x_offset=+15, y_offset=+5)
+tooltip_2 = CTkToolTip(btn_cargar_img_2, delay=0, message=mensaje_2, x_offset=+15, y_offset=+5)
+tooltip_3 = CTkToolTip(btn_cargar_img_3, delay=0, message=mensaje_3, x_offset=+15, y_offset=+5)
+
+# Rutas de las imagenes de los tooltips
+ruta_ejemplo_1 = 'ejemplo_notas.png'
+ruta_ejemplo_2 = 'ejemplo_ponderaciones.png'
+ruta_ejemplo_3 = 'ejemplo_pantalla_completa.png'
+
+# Asociar eventos para mostrar y ocultar la imagen al pasar el mouse sobre el botón
+btn_cargar_img_1.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_1, 265, 185))
+btn_cargar_img_1.bind("<Leave>", ocultar_imagen)
+
+btn_cargar_img_2.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_2, 190, 180))
+btn_cargar_img_2.bind("<Leave>", ocultar_imagen)
+
+btn_cargar_img_3.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_3, 120, 180))
+btn_cargar_img_3.bind("<Leave>", ocultar_imagen)
+
+################################################### VISTA: PROYECCION DE NOTAS ################################################### 
+
+
 
 ventana.mainloop()
 
