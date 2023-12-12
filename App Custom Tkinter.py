@@ -476,7 +476,7 @@ ruta_ejemplo_3 = 'ejemplo_pantalla_completa.png'
 btn_cargar_img_1.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_1, 265, 185))
 btn_cargar_img_1.bind("<Leave>", ocultar_imagen)
 
-btn_cargar_img_2.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_2, 190, 180))
+btn_cargar_img_2.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_2, 175, 180))
 btn_cargar_img_2.bind("<Leave>", ocultar_imagen)
 
 btn_cargar_img_3.bind("<Enter>",lambda event: mostrar_imagen(event, vista.tab('Subir imagenes'), ruta_ejemplo_3, 120, 180))
