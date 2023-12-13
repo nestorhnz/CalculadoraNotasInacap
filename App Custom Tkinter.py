@@ -8,6 +8,8 @@ import shutil
 from CTkToolTip import *
 from tkinter import PhotoImage
 
+import matplotlib.pyplot as plt
+
 # VARIABLES
 ponderaciones_globales = []
 calificaciones_globales = []
@@ -484,7 +486,19 @@ btn_cargar_img_3.bind("<Leave>", ocultar_imagen)
 
 ################################################### VISTA: PROYECCION DE NOTAS ################################################### 
 
+def mostrar_grafico():
+    notas = calificaciones_globales
+    ponderaciones = ponderaciones_globales
 
+    plt.plot(ponderaciones, notas)
+    plt.title('Proyección de notas')
+    plt.xlabel('Ponderaciones')
+    plt.ylabel('Notas')
+    
+    plt.show()
+
+btn_proyeccion = ctk.CTkButton(vista.tab('Proyección de notas'), command=mostrar_grafico, text='Mostrar grafico')
+btn_proyeccion.grid(row=1, column=4, sticky='w')
 
 ventana.mainloop()
 
