@@ -24,6 +24,8 @@ Ejemplo imagen de referencia de las ponderaciones:
 Ejemplo Captura completa:
 ![Captura de pantalla (88)](https://github.com/nestorhnz/CalculadoraNotasInacap/assets/153102889/c2b2d61c-153c-4f99-b1cc-9984785ef911)
 
+## Instalacion de librerias
+Para poder instalar todas las librerias puedes utilizar "pip install -r requirements.txt".
 
 
 
