@@ -19,6 +19,7 @@ modo_actual = "light"
 ruta_notas = ''
 ruta_ponderaciones = ''
 ruta_pantalla = ''
+ponderaciones_faltantes_globales = []
 
 # FUNCIONES
 def obtener_ponderaciones():    # Obtiene las ponderaciones, las convierte a int y guarda en ponderaciones_globales
@@ -115,10 +116,19 @@ def obtener_todo():  # Obtiene todos los valores de las cajas de texto
     return
 
 def calcular_calificaciones_manualmente():  # Calcula las calificaciones que has sido ingresadas manualmente
-    global notas_para_aprobar
+    global notas_para_aprobar, ponderaciones_faltantes_globales
 
     obtener_todo()
     if ponderaciones_globales and calificaciones_globales and aprobatoria_global:
+
+        # Borrar y reescriben las cajas de texto con el fin de eliminar calculos anteriores
+        borrar_caja_texto()
+        escribir_entry(ponderaciones_globales, 1)
+        escribir_entry(calificaciones_globales, 2)
+        
+        # Guarda los porcentajes de las evaluaciones que no tienen calificacion
+        ponderaciones_faltantes_globales = [elemento for elemento in ponderaciones_globales[(len(calificaciones_globales)-len(ponderaciones_globales)):]]
+
         notas_para_aprobar = calcular_calificaciones(ponderaciones_globales, calificaciones_globales, aprobatoria_global)
         nota_actual = nota_final_actual(ponderaciones_globales, calificaciones_globales)
         lbl_alerta.configure(text='Campos ingresados correctamente')
@@ -133,6 +143,9 @@ def calcular_calificaciones_manualmente():  # Calcula las calificaciones que has
                 imprimir_nota += f'Un {valor} en la {llave}\n'
             lbl_notas_necesarias.configure(text=f'Para aprobar con {aprobatoria_global} necesitas:')
             lbl_evaluaciones.configure(text=imprimir_nota)
+        
+        btn_proyeccion = ctk.CTkButton(vista.tab('Calcular calificaciones'), command=mostrar_grafico, text='Mostrar grafico')
+        btn_proyeccion.grid(row=4, column=4, sticky='w')
     return
 
 def nota_final_actual(ponderaciones: list, calificaciones: list):   # Calcula la nota actual del estudiante (Nota final)
@@ -320,7 +333,7 @@ def escribir_entry(lista, numero):   # Escribe texto en entry
         nota_aprobatoria.insert(0, 3.5)
     return
 
-def eliminar_archivo(ruta_archivo):
+def eliminar_archivo(ruta_archivo): # Elimina archivo
     try:
         # Elimina el archivo en la ruta proporcionada
         os.remove(ruta_archivo)
@@ -342,6 +355,12 @@ def ocultar_imagen(event):  # Destruye imagen creada en tooltip
     etique1.destroy()
     return
 
+def estimar_notas(notas:list):   # Hace un promedio de las calificaciones que tiene el estudiante y regresa una lista con estimaciones
+    notas_estimadas = []
+    for i in range((4-len(notas))):
+        notas_estimadas.append(sum(notas)/len(notas))
+    return notas_estimadas
+
 # Ventana principal
 ventana = ctk.CTk()
 ventana.geometry('600x500')
@@ -354,7 +373,6 @@ vista.pack(pady=20, padx=20, expand = 1)
 # Añadiendo vistas
 vista.add('Calcular calificaciones')
 vista.add('Subir imagenes')
-vista.add('Proyección de notas')
 # Vista principal
 vista.set('Calcular calificaciones')
 
@@ -487,18 +505,41 @@ btn_cargar_img_3.bind("<Leave>", ocultar_imagen)
 ################################################### VISTA: PROYECCION DE NOTAS ################################################### 
 
 def mostrar_grafico():
+    global notas_para_aprobar
+
     notas = calificaciones_globales
     ponderaciones = ponderaciones_globales
-
-    plt.plot(ponderaciones, notas)
-    plt.title('Proyección de notas')
-    plt.xlabel('Ponderaciones')
-    plt.ylabel('Notas')
+    faltantes = ponderaciones_faltantes_globales
+    evaluaciones = [1,2,3,4]
+    x_values = [1,2,3,4,5,6,7]
+    y_values = [10,15,20,25,30,35,40] + ponderaciones
     
+    # Ajusta la longitud de la lista porque X y Y deben tener el mismo tamaño
+    if len(notas) < 4:
+        ponderaciones = ponderaciones[:(len(notas))]
+
+    # Si todavia no ha aprobado ni reprobado, se muestran las notas aprobatorias (notas_para_aprobar solo puede ser dict, True o False)
+    if type(notas_para_aprobar) == dict:
+        grafica_1 = plt.scatter(notas_para_aprobar.values(), faltantes)
+        grafica_2 = plt.scatter(estimar_notas(notas), faltantes)
+
+    # Se muestra las calificaciones actuales
+    grafica_3 = plt.scatter(notas, ponderaciones)
+    plt.title('Progreso del estudiante')
+    plt.xlabel('Calificaciones')
+    plt.ylabel('Ponderaciones')
+
+    # Nombre de las graficas
+    if type(notas_para_aprobar) == dict:
+        plt.legend(['Calificaciones necesarias para aprobar','Calificaciones futuras estimadas','Calificaciones actuales'])
+        x_values += notas_para_aprobar.values() 
+        x_values += estimar_notas(notas)
+    else:
+        plt.legend(['Calificaciones actuales'])
+
+    plt.xticks(x_values)  
+    plt.yticks(y_values)
+
     plt.show()
 
-btn_proyeccion = ctk.CTkButton(vista.tab('Proyección de notas'), command=mostrar_grafico, text='Mostrar grafico')
-btn_proyeccion.grid(row=1, column=4, sticky='w')
-
 ventana.mainloop()
-

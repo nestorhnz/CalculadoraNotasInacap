@@ -115,20 +115,23 @@ def calcular_calificaciones(porcentajes, calificaciones, calificacion_aprobatori
             # Añadiendo las calificaciones necesarias para aprobar
             for numero_evaluacion, porcentaje in porcentajes_faltantes.items():
                 if porcentaje_individual > porcentaje:
-                    notas_necesarias[f'Evaluacion {numero_evaluacion}'] = 7 
+                    notas_necesarias[f'Evaluacion N°{numero_evaluacion}'] = 7 
                     exceso += porcentaje_individual - porcentaje
                 else:
                     porcentaje_mas_exceso = porcentaje_individual + exceso
 
                     if porcentaje_mas_exceso < porcentaje:
                         calificacion_aprobatoria = round((porcentaje_mas_exceso * 7) / porcentaje, 1)
-                        notas_necesarias[f'Evaluacion {numero_evaluacion}'] = calificacion_aprobatoria
+                        if calificacion_aprobatoria < 1:
+                            notas_necesarias[f'Evaluacion N°{numero_evaluacion}'] = 1
+                        else:
+                            notas_necesarias[f'Evaluacion N°{numero_evaluacion}'] = calificacion_aprobatoria
                         exceso = 0
                     else:
-                        notas_necesarias[f'Evaluacion {numero_evaluacion}'] = 7
+                        notas_necesarias[f'Evaluacion N°{numero_evaluacion}'] = 7
                         exceso += porcentaje_individual - porcentaje
 
-            return ordenar_diccionario(notas_necesarias) # No devuelve en orden de las evaluaciones
+            return ordenar_diccionario(notas_necesarias) 
                     
     else:   # Ya aprobo la asignatura 
         return True 

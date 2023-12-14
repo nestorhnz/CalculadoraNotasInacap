@@ -26,6 +26,7 @@ Ejemplo Captura completa:
 
 ## Instalacion de librerias
 Para poder instalar todas las librerias puedes utilizar "pip install -r requirements.txt".
+Además Tesseract se debe descagar en este link https://github.com/UB-Mannheim/tesseract/wiki
 
 
 
