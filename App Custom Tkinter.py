@@ -310,7 +310,7 @@ def llamar_funciones():     # Llama las funciones chequear_ruta, borrar y escrib
         lbl_alerta.configure(text=f'Ha ocurrido un error {e}')
 
 def borrar_caja_texto():    # Borra todo el texto escrito en las cajas de notas y ponderaciones
-    lista_cajas_texto = [nota_1, nota_2, nota_3, nota_4, ponderacion_1, ponderacion_2, ponderacion_3, ponderacion_4, nota_aprobatoria]
+    lista_cajas_texto = [nota_1, nota_2, nota_3, nota_4, ponderacion_1, ponderacion_2, ponderacion_3, ponderacion_4]
     for caja in lista_cajas_texto:
         caja.delete(0, 'end')  # Borrar todo el contenido de la caja de texto
     
@@ -330,7 +330,6 @@ def escribir_entry(lista, numero):   # Escribe texto en entry
     elif numero == 2:
         for caja_n, nota in zip(cajas_de_notas, lista):
             caja_n.insert(0, nota)  # Insertar el nuevo texto en el Entry
-        nota_aprobatoria.insert(0, 3.5)
     return
 
 def eliminar_archivo(ruta_archivo): # Elimina archivo
